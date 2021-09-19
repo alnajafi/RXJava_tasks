@@ -1,5 +1,6 @@
 package com.ibareq.rxjavatasks
 
+import io.reactivex.rxjava3.annotations.NonNull
 import io.reactivex.rxjava3.core.Observable
 import java.util.concurrent.TimeUnit
 
@@ -16,9 +17,9 @@ object RXJavaTasks {
      * Complete below function
      * let it emit characters form A to Z each 1 second
      */
-    fun task1(): Observable<String> {
-        val alphabet = mutableListOf("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
-        return Observable.fromIterable(alphabet).take(1, TimeUnit.SECONDS)
+    fun task1(): @NonNull Observable<@NonNull MutableList<String>>? {
+        val alphabet = listOf("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
+        return Observable.fromIterable(alphabet).buffer(26,1,TimeUnit.SECONDS)
     }
 
     /**
@@ -47,7 +48,7 @@ object RXJavaTasks {
      * let it emit characters form A to Z each 1 second
      */
     fun task4(): Observable<Int> {
-        return Observable.range(1,100).take(80).skip(20).take(1, TimeUnit.SECONDS)
+        return Observable.range(1,100).take(80).skip(20)
             .zipWith(Observable.interval(300, TimeUnit.MILLISECONDS), {item, _ -> item})
     }
 
